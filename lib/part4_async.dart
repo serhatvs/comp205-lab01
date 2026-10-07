@@ -7,16 +7,20 @@ Future<String> fetchGreeting(
   String name, {
   Duration delay = const Duration(milliseconds: 50),
 }) async {
-  // TODO(4.1): await Future.delayed(delay); then return the greeting.
-  throw UnimplementedError('fetchGreeting');
+  await Future.delayed(delay);
+  return 'Hello, $name';
 }
 
 /// Fetches a greeting for every name in [names], one after another.
 ///
 /// The results are returned in the same order as [names].
 Future<List<String>> fetchAll(List<String> names) async {
-  // TODO(4.2): use a for loop with await inside.
-  throw UnimplementedError('fetchAll');
+  List<String> results = [];
+  for (String name in names) {
+    String greeting = await fetchGreeting(name);
+    results.add(greeting);
+  }
+  return results;
 }
 
 /// Runs [task] and returns its result.
@@ -26,6 +30,9 @@ Future<String> withFallback(
   Future<String> Function() task, {
   String fallback = 'offline',
 }) async {
-  // TODO(4.3): try { ... } catch (_) { ... }
-  throw UnimplementedError('withFallback');
+  try {
+    return await task();
+  } catch (e) {
+    return fallback;
+  }
 }

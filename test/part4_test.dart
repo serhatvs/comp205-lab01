@@ -15,4 +15,27 @@ void main() {
   });
 
   // TODO(4.4): add your tests below.
+  test('fetchAll keeps the order of the names', () async {
+    final names = ['Alice', 'Bob', 'Charlie'];
+    final greetings = await fetchAll(names);
+    expect(greetings, ['Hello, Alice', 'Hello, Bob', 'Hello, Charlie']);
+  });
+
+  test('withFallback returns the task result when it succeeds', () async {
+    final result = await withFallback(() async => 'online');
+    expect(result, 'online');
+  });
+
+  test('withFallback returns offline when the task throws', () async {
+    final result = await withFallback(() async => throw Exception('no network'));
+    expect(result, 'offline');
+  });
+
+  test('withFallback uses a custom fallback value', () async {
+    final result = await withFallback(
+      () async => throw Exception('server error'),
+      fallback: 'error: unavailable',
+    );
+    expect(result, 'error: unavailable');
+  });
 }
