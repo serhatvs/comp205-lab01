@@ -6,8 +6,11 @@
 /// [greeting] is optional and defaults to "Hello".
 /// If [excited] is true, the greeting ends with "!!!" instead of "!".
 String greet(String name, {String greeting = 'Hello', bool excited = false}) {
-  // TODO(1.1): use string interpolation, for example '$greeting, $name'.
-  throw UnimplementedError('greet');
+  if (excited) {
+    return '$greeting, $name!!!';
+  } else {
+    return '$greeting, $name!';
+  }
 }
 
 /// Parses [input] into an age.
@@ -15,21 +18,33 @@ String greet(String name, {String greeting = 'Hello', bool excited = false}) {
 /// Spaces around the number are allowed: " 21 " -> 21.
 /// Returns null if [input] is not a whole number or is negative.
 int? parseAge(String input) {
-  // TODO(1.2): look up int.tryParse and String.trim in the Dart docs.
-  throw UnimplementedError('parseAge');
+  int? age = int.tryParse(input.trim());
+  if (age == null) {
+    return null;
+  }
+  if (age < 0) {
+    return null;
+  }
+  return age;
 }
 
 /// Describes an age group:
 /// null -> "unknown", 0-12 -> "child", 13-17 -> "teen", 18 or more -> "adult".
 String describeAge(int? age) {
-  // TODO(1.3): handle null first - after that, Dart knows age is an int.
-  throw UnimplementedError('describeAge');
+  if (age == null) {
+    return 'unknown';
+  } else if (age < 13) {
+    return 'child';
+  } else if (age < 18) {
+    return 'teen';
+  } else {
+    return 'adult';
+  }
 }
 
 /// Returns the length of [text], or 0 if [text] is null.
 ///
 /// Use null-aware operators (?. and ??), not an if statement.
 int safeLength(String? text) {
-  // TODO(1.4): one line is enough.
-  throw UnimplementedError('safeLength');
+  return text?.length ?? 0;
 }
