@@ -2,8 +2,7 @@
 
 /// Returns only the even numbers of [numbers], in the same order.
 List<int> evens(List<int> numbers) {
-  // TODO(2.1): try where(...) and toList().
-  throw UnimplementedError('evens');
+  return numbers.where((n) => n % 2 == 0).toList();
 }
 
 /// Counts how often each word appears in [text].
@@ -12,16 +11,36 @@ List<int> evens(List<int> numbers) {
 /// Counting is case-insensitive: "The" and "the" are the same word.
 /// Example: "The cat the" -> {"the": 2, "cat": 1}
 Map<String, int> wordCount(String text) {
-  // TODO(2.2): hint: text.trim().toLowerCase().split(RegExp(r'\s+')), and skip empty words.
-  throw UnimplementedError('wordCount');
+  Map<String, int> counts = {};
+  String cleaned = text.trim();
+  if (cleaned.isEmpty) {
+    return counts;
+  }
+  List<String> words = cleaned.toLowerCase().split(RegExp(r'\s+'));
+  for (String word in words) {
+    counts[word] = (counts[word] ?? 0) + 1;
+  }
+  return counts;
 }
 
 /// Returns the smallest and the largest value of [numbers] as a record.
 ///
 /// Throws an [ArgumentError] if [numbers] is empty.
 (int, int) minMax(List<int> numbers) {
-  // TODO(2.3): a record is written like (low, high).
-  throw UnimplementedError('minMax');
+  if (numbers.isEmpty) {
+    throw ArgumentError('numbers cannot be empty');
+  }
+  int min = numbers[0];
+  int max = numbers[0];
+  for (int n in numbers) {
+    if (n < min) {
+      min = n;
+    }
+    if (n > max) {
+      max = n;
+    }
+  }
+  return (min, max);
 }
 
 /// Builds the items of an app menu.
@@ -31,6 +50,9 @@ Map<String, int> wordCount(String text) {
 /// All [extras] are added at the end, in order.
 /// Use collection-if and the spread operator (...).
 List<String> buildMenu({bool isAdmin = false, List<String> extras = const []}) {
-  // TODO(2.4): one list literal is enough.
-  throw UnimplementedError('buildMenu');
+  return [
+    'Home',
+    if (isAdmin) 'Admin',
+    ...extras,
+  ];
 }
